@@ -1,0 +1,106 @@
+<script setup lang="ts">
+const props = defineProps<{
+  resource: string;
+}>();
+
+const toast = useToast();
+const crudBaseUrl = useRuntimeConfig().public.crudBaseUrl;
+
+const { data } = await useFetch(`${crudBaseUrl}/${props.resource}`);
+
+async function onDelete(id: number) {
+  if (!confirm("Are you sure you want to delete this row?")) return;
+
+  try {
+    await $fetch(`${crudBaseUrl}/${props.resource}/${id}`, {
+      method: "DELETE",
+    });
+    toast.add({
+      title: "Deleted",
+      description: `Row ${id} deleted`,
+      color: "success",
+    });
+    await refreshNuxtData();
+  } catch (e) {
+    toast.add({
+      title: "Error",
+      description: "Could not delete",
+      color: "error",
+    });
+  }
+}
+</script>
+
+<template>
+  <div class="overflow-x-auto">
+    <CrudCreateRow :resource />
+    <table class="min-w-full border-collapse border border-gray-300">
+      <!-- Table Head -->
+      <thead v-if="data?.length">
+        <tr>
+          <th
+            v-for="(value, key) in data[0]"
+            :key="key"
+            class="border border-gray-300 px-4 py-2 text-left bg-gray-500"
+          >
+            {{ key }}
+          </th>
+          <th class="border border-gray-300 px-4 py-2 text-left bg-gray-500">
+            &nbsp;
+          </th>
+        </tr>
+      </thead>
+      <tbody v-else>
+        <tr>
+          <td colspan="100%" class="px-4 py-2 text-center text-gray-500">
+            No records found.
+          </td>
+        </tr>
+      </tbody>
+
+      <!-- Table Body -->
+      <tbody>
+        <tr v-for="(row, i) in data" :key="i">
+          <td
+            v-for="(value, key) in row"
+            :key="key"
+            class="border border-gray-300 px-4 py-2"
+          >
+            {{ value }}
+          </td>
+          <td class="border border-gray-300 px-4 py-2">
+            <UPopover
+              :content="{ align: 'start', side: 'left' }"
+              class="relative"
+            >
+              <!-- Trigger button (kebab menu) -->
+              <UButton
+                icon="i-lucide-more-vertical"
+                color="neutral"
+                variant="outline"
+                size="sm"
+                class="p-1"
+              />
+
+              <template #content>
+                <div
+                  class="bg-slate-200 border rounded shadow-md p-2 flex flex-col gap-1 min-w-[120px]"
+                >
+                  <CrudViewRow :row="row" />
+                  <CrudEditRow :resource="resource" :row="row" />
+                  <UButton
+                    label="Delete"
+                    color="error"
+                    variant="outline"
+                    size="sm"
+                    @click="onDelete(row.id)"
+                  />
+                </div>
+              </template>
+            </UPopover>
+          </td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+</template>
