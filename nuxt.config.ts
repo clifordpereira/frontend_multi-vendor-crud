@@ -10,6 +10,7 @@ export default defineNuxtConfig({
   runtimeConfig: {
     public: {
       crudBaseUrl: process.env.NUXT_PUBLIC_CRUD_BASE_URL,
+      crudApiKey: process.env.NUXT_PUBLIC_CRUD_API_KEY || "",
     },
   },
 });

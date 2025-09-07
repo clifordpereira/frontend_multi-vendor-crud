@@ -16,7 +16,10 @@ const state = computed(() => {
 
 const crudBaseUrl = useRuntimeConfig().public.crudBaseUrl;
 const { data: schema } = await useFetch(
-  `${crudBaseUrl}/schema/${props.resource}`
+  `${crudBaseUrl}/schema/${props.resource}`,
+  {
+    headers: crudHeaders(),
+  }
 );
 
 async function onSubmit(data) {
@@ -25,7 +28,8 @@ async function onSubmit(data) {
   try {
     await $fetch(`${crudBaseUrl}/${props.resource}/${props.row.id}`, {
       method: "PATCH",
-      body: data, // use the actual form values
+      body: data,
+      headers: crudHeaders(),
     });
 
     useToast().add({

@@ -6,7 +6,9 @@ const props = defineProps<{
 const toast = useToast();
 const crudBaseUrl = useRuntimeConfig().public.crudBaseUrl;
 
-const { data } = await useFetch(`${crudBaseUrl}/${props.resource}`);
+const { data } = await useFetch(`${crudBaseUrl}/${props.resource}`, {
+  headers: crudHeaders(),
+});
 
 async function onDelete(id: number) {
   if (!confirm("Are you sure you want to delete this row?")) return;
@@ -14,6 +16,7 @@ async function onDelete(id: number) {
   try {
     await $fetch(`${crudBaseUrl}/${props.resource}/${id}`, {
       method: "DELETE",
+      headers: crudHeaders(),
     });
     toast.add({
       title: "Deleted",

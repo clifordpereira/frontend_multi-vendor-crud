@@ -5,7 +5,10 @@ const props = defineProps<{
 
 const crudBaseUrl = useRuntimeConfig().public.crudBaseUrl;
 const { data: schema } = await useFetch(
-  `${crudBaseUrl}/schema/${props.resource}`
+  `${crudBaseUrl}/schema/${props.resource}`,
+  {
+    headers: crudHeaders(),
+  }
 );
 
 async function onSubmit(data) {
@@ -13,6 +16,7 @@ async function onSubmit(data) {
     await $fetch(`${crudBaseUrl}/${props.resource}`, {
       method: "POST",
       body: data,
+      headers: crudHeaders(),
     });
 
     useToast().add({
