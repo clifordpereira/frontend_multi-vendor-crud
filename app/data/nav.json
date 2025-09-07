@@ -8,10 +8,5 @@
     "label": "Users",
     "to": "/resource/users",
     "icon": "i-lucide-users"
-  },
-  {
-    "label": "Jobs",
-    "to": "/resource/jobs",
-    "icon": "i-lucide-briefcase"
   }
 ]
