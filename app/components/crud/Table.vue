@@ -66,7 +66,7 @@ async function onDelete(id: number) {
             :key="key"
             class="border border-gray-300 px-4 py-2"
           >
-            {{ value }}
+            {{ isDate(value) ? formatDateForDisplay(value) : value }}
           </td>
           <td class="border border-gray-300 px-4 py-2">
             <UPopover

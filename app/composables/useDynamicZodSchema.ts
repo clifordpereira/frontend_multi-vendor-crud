@@ -27,8 +27,8 @@ export function useDynamicZodSchema(
         : z.number().optional();
     } else if (field.type === "date") {
       validators[field.name] = field.required
-        ? z.string().datetime()
-        : z.string().datetime().optional();
+        ? z.coerce.date()
+        : z.coerce.date().optional();
     } else if (field.type === "boolean") {
       validators[field.name] = z.boolean().optional();
     }

@@ -11,6 +11,7 @@ const props = defineProps<{
 
 const emit = defineEmits<{
   (e: "submit", event: FormSubmitEvent<any>): void;
+  (e: "close"): void;
 }>();
 
 // filter out system fields
@@ -30,6 +31,7 @@ filteredFields.forEach((field) => {
 
 function handleSubmit(event: FormSubmitEvent<any>) {
   emit("submit", event.data);
+  emit("close");
 }
 </script>
 
@@ -46,29 +48,19 @@ function handleSubmit(event: FormSubmitEvent<any>) {
       :label="field.name"
       :name="field.name"
     >
-      <UInput
-        v-if="field.type === 'string'"
-        v-model="state[field.name]"
-        :required="field.required"
-      />
-
-      <UInput
-        v-else-if="field.type === 'number'"
-        v-model.number="state[field.name]"
-        type="number"
-        :required="field.required"
-      />
+      <UCheckbox v-if="field.type === 'boolean'" v-model="state[field.name]" />
 
       <UInput
         v-else-if="field.type === 'date'"
         v-model="state[field.name]"
-        type="date"
-        :required="field.required"
+        type="datetime-local"
       />
 
-      <UCheckbox
-        v-else-if="field.type === 'boolean'"
+      <UInput
+        v-else
         v-model="state[field.name]"
+        :type="field.type"
+        :required="field.required"
       />
     </UFormField>
 

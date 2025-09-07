@@ -5,8 +5,13 @@ const props = defineProps<{
 }>();
 
 const state = computed(() => {
-  const { createdAt, ...rest } = props.row;
-  return rest;
+  if (!schema.value) return {};
+  // exclude system fields
+  const filteredFields = schema.value.fields.filter(
+    (field) => field.name !== "createdAt" && field.name !== "id"
+  );
+
+  return useFormState(filteredFields, props.row);
 });
 
 const crudBaseUrl = useRuntimeConfig().public.crudBaseUrl;
@@ -39,10 +44,12 @@ async function onSubmit(data) {
     });
   }
 }
+
+const isModalOpen = ref(false);
 </script>
 
 <template>
-  <UModal>
+  <UModal v-model:open="isModalOpen">
     <!-- Trigger button -->
     <UButton
       label="Edit"
@@ -53,10 +60,9 @@ async function onSubmit(data) {
 
     <!-- Modal content -->
     <template #content>
-      <div class="max-w-md p-6 bg-white rounded-lg shadow-lg space-y-4">
-        <h3 class="text-lg font-semibold text-gray-800 mb-2">
-          Edit {{ resource }}
-        </h3>
+      <div class="max-w-md p-6 rounded-lg shadow-lg space-y-4">
+        <h2 class="text-lg font-semibold mb-2">Edit {{ resource }}</h2>
+        <hr />
 
         <!-- Form -->
         <CrudForm
@@ -64,6 +70,7 @@ async function onSubmit(data) {
           :schema="schema"
           :initial-state="state"
           @submit="onSubmit"
+          @close="isModalOpen = false"
         />
 
         <!-- Fallback -->

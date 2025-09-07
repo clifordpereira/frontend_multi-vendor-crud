@@ -31,11 +31,13 @@ async function onSubmit(data) {
     });
   }
 }
+
+const isModalOpen = ref(false);
 </script>
 
 <template>
   <div>
-    <UModal>
+    <UModal v-model:open="isModalOpen">
       <!-- Trigger button -->
       <UButton label="Add New" color="neutral" variant="subtle" />
 
@@ -50,7 +52,11 @@ async function onSubmit(data) {
           <div class="mt-4">
             <!-- Dynamic form -->
             <div v-if="schema">
-              <CrudForm :schema="schema" @submit="onSubmit" />
+              <CrudForm
+                :schema="schema"
+                @submit="onSubmit"
+                @close="isModalOpen = false"
+              />
             </div>
 
             <!-- Fallback -->
