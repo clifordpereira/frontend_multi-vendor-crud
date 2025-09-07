@@ -28,17 +28,17 @@ Nuxt CRUD Frontend Template [https://github.com/clifordpereira/nuxt-crud-fronten
 
 or clone this repo and change the remote URL to your new repo:
 
-````bash
+```bash
 git clone https://github.com/clifordpereira/nuxt-crud-frontend.git
 git remote set-url origin <YOUR_NEW_REPO_URL>
-```bash
+```
 
 ### 2. Install dependencies
 
 ```bash
 cd nuxt-crud-frontend
 npm install
-````
+```
 
 ### 3. Configure the backend API
 
