@@ -51,10 +51,13 @@ NUXT_PUBLIC_CRUD_BASE_URL="http://localhost:3000/api"
 The API must expose CRUD endpoints like:
 
 ```bash
-GET    /api/:resource
-POST   /api/:resource
-PATCH  /api/:resource/:id
-DELETE /api/:resource/:id
+| Method | Endpoint             | Description                     |
+| ------ | -------------------- | ------------------------------- |
+| GET    | `/api/:resource`     | Fetch all records of a resource |
+| GET    | `/api/:resource/:id` | Fetch a single record by ID     |
+| POST   | `/api/:resource`     | Create a new record             |
+| PATCH  | `/api/:resource/:id` | Update an existing record       |
+| DELETE | `/api/:resource/:id` | Delete a record by ID           |
 ```
 
 The frontend works with any backend that follows this structure.
