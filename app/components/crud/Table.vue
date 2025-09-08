@@ -3,9 +3,7 @@ const props = defineProps<{
   resource: string;
 }>();
 
-const toast = useToast();
 const crudBaseUrl = useRuntimeConfig().public.crudBaseUrl;
-
 const { data } = await useFetch(`${crudBaseUrl}/${props.resource}`, {
   headers: crudHeaders(),
 });
@@ -13,24 +11,7 @@ const { data } = await useFetch(`${crudBaseUrl}/${props.resource}`, {
 async function onDelete(id: number) {
   if (!confirm("Are you sure you want to delete this row?")) return;
 
-  try {
-    await $fetch(`${crudBaseUrl}/${props.resource}/${id}`, {
-      method: "DELETE",
-      headers: crudHeaders(),
-    });
-    toast.add({
-      title: "Deleted",
-      description: `Row ${id} deleted`,
-      color: "success",
-    });
-    await refreshNuxtData();
-  } catch (e) {
-    toast.add({
-      title: "Error",
-      description: "Could not delete",
-      color: "error",
-    });
-  }
+  await useCrudFetch("DELETE", props.resource, id);
 }
 </script>
 

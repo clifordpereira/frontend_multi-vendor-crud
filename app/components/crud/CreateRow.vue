@@ -11,29 +11,8 @@ const { data: schema } = await useFetch(
   }
 );
 
-async function onSubmit(data) {
-  try {
-    await $fetch(`${crudBaseUrl}/${props.resource}`, {
-      method: "POST",
-      body: data,
-      headers: crudHeaders(),
-    });
-
-    useToast().add({
-      title: `${props.resource} created`,
-      description: `A new ${props.resource} was added successfully.`,
-      color: "success",
-    });
-
-    await refreshNuxtData();
-  } catch (err) {
-    console.error(err);
-    useToast().add({
-      title: "Error",
-      description: `Could not save ${props.resource}`,
-      color: "error",
-    });
-  }
+async function onSubmit(data: any) {
+  await useCrudFetch("POST", props.resource, null, data);
 }
 
 const isModalOpen = ref(false);

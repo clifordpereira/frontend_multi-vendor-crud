@@ -22,29 +22,8 @@ const { data: schema } = await useFetch(
   }
 );
 
-async function onSubmit(data) {
-  try {
-    await $fetch(`${crudBaseUrl}/${props.resource}/${props.row.id}`, {
-      method: "PATCH",
-      body: data,
-      headers: crudHeaders(),
-    });
-
-    useToast().add({
-      title: `${props.resource} updated`,
-      description: `${props.resource} #${props.row.id} was updated successfully.`,
-      color: "success",
-    });
-
-    await refreshNuxtData();
-  } catch (err) {
-    console.error(err);
-    useToast().add({
-      title: "Error",
-      description: `Could not update ${props.resource}`,
-      color: "error",
-    });
-  }
+async function onSubmit(data: any) {
+  await useCrudFetch("PATCH", props.resource, props.row.id, data);
 }
 
 const isModalOpen = ref(false);
