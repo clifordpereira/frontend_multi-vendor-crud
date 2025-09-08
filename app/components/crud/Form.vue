@@ -20,7 +20,7 @@ const filteredFields = props.schema.fields.filter(
 );
 
 // dynamically build zod schema
-const formSchema = useDynamicZodSchema(filteredFields);
+const formSchema = useDynamicZodSchema(filteredFields, !!props.initialState);
 
 // reactive state for form data
 const state = reactive<Record<string, any>>({});
@@ -42,28 +42,37 @@ function handleSubmit(event: FormSubmitEvent<any>) {
     class="space-y-4"
     @submit="handleSubmit"
   >
-    <UFormField
-      v-for="field in filteredFields"
-      :key="field.name"
-      :label="field.name"
-      :name="field.name"
-    >
-      <UCheckbox v-if="field.type === 'boolean'" v-model="state[field.name]" />
+    <template v-for="field in filteredFields" :key="field.name">
+      <UFormField
+        v-if="!initialState || field.name !== 'password'"
+        :label="field.name"
+        :name="field.name"
+      >
+        <UCheckbox
+          v-if="field.type === 'boolean'"
+          v-model="state[field.name]"
+        />
 
-      <UInput
-        v-else-if="field.type === 'date'"
-        v-model="state[field.name]"
-        type="datetime-local"
-      />
+        <UInput
+          v-else-if="field.type === 'date'"
+          v-model="state[field.name]"
+          type="datetime-local"
+        />
 
-      <UInput
-        v-else
-        v-model="state[field.name]"
-        :type="field.type"
-        :required="field.required"
-      />
-    </UFormField>
+        <CommonPassword
+          v-else-if="field.name === 'password'"
+          v-model="state[field.name]"
+          type="password"
+        />
 
+        <UInput
+          v-else
+          v-model="state[field.name]"
+          :type="field.type"
+          :required="field.required"
+        />
+      </UFormField>
+    </template>
     <UButton type="submit"> Submit </UButton>
   </UForm>
 </template>

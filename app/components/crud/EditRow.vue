@@ -23,8 +23,6 @@ const { data: schema } = await useFetch(
 );
 
 async function onSubmit(data) {
-  console.log("Form submitted:", data);
-
   try {
     await $fetch(`${crudBaseUrl}/${props.resource}/${props.row.id}`, {
       method: "PATCH",

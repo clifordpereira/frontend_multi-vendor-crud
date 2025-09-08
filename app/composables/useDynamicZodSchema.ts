@@ -8,15 +8,31 @@
  *  ];
  *  const schema = useDynamicZodSchema(fields);
  */
-
 import { z } from "zod";
 
 export function useDynamicZodSchema(
-  fields: { name: string; type: string; required?: boolean }[]
+  fields: { name: string; type: string; required?: boolean }[],
+  isEdit = false
 ) {
   const validators: Record<string, any> = {};
 
   fields.forEach((field) => {
+    if (field.name === "password") {
+      if (isEdit) {
+        // optional on edit
+        validators.password = z.string().optional();
+      } else {
+        // required on create
+        validators.password = z
+          .string()
+          .min(8, "At least 8 characters")
+          .regex(/\d/, "At least 1 number")
+          .regex(/[a-z]/, "At least 1 lowercase letter")
+          .regex(/[A-Z]/, "At least 1 uppercase letter");
+      }
+      return;
+    }
+
     if (field.type === "string") {
       validators[field.name] = field.required
         ? z.string().min(1, `${field.name} is required`)
