@@ -3,6 +3,7 @@
     <!-- Sidebar -->
     <aside class="w-1/6">
       <CommonNavigation />
+      <CommonLoginButton />
     </aside>
 
     <!-- Main Content -->
