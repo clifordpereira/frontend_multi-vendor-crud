@@ -13,12 +13,21 @@ async function onDelete(id: number) {
 
   await useCrudFetch("DELETE", props.resource, id);
 }
+
+const paginatedItems = ref<any[]>([]);
 </script>
 
 <template>
   <div class="overflow-x-auto">
     <h1 class="text-2xl font-bold text-center mt-3">List {{ resource }}</h1>
     <CrudCreateRow :resource />
+
+    <CommonPagination
+      :data="data || []"
+      :items-per-page="10"
+      @update:paginated="paginatedItems = $event"
+    />
+
     <table class="min-w-full border-collapse border border-gray-300 mt-1">
       <!-- Table Head -->
       <thead v-if="data?.length">
@@ -45,7 +54,7 @@ async function onDelete(id: number) {
 
       <!-- Table Body -->
       <tbody>
-        <tr v-for="(row, i) in data" :key="i">
+        <tr v-for="(row, i) in paginatedItems" :key="i">
           <td
             v-for="(value, key) in row"
             :key="key"
