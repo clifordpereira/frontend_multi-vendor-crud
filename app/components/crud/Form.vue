@@ -16,7 +16,7 @@ const emit = defineEmits<{
 
 // filter out system fields
 const filteredFields = props.schema.fields.filter(
-  (field) => field.name !== "createdAt" && field.name !== "id"
+  (field) => field.name !== "created_at" && field.name !== "id"
 );
 
 // dynamically build zod schema
@@ -25,8 +25,11 @@ const formSchema = useDynamicZodSchema(filteredFields, !!props.initialState);
 // reactive state for form data
 const state = reactive<Record<string, any>>({});
 filteredFields.forEach((field) => {
-  // use initial value if provided, otherwise empty
-  state[field.name] = props.initialState?.[field.name] ?? "";
+  if (field.type === "boolean") {
+    state[field.name] = props.initialState?.[field.name] ?? false;
+  } else {
+    state[field.name] = props.initialState?.[field.name] ?? "";
+  }
 });
 
 function handleSubmit(event: FormSubmitEvent<any>) {

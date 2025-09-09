@@ -8,7 +8,7 @@ const state = computed(() => {
   if (!schema.value) return {};
   // exclude system fields
   const filteredFields = schema.value.fields.filter(
-    (field) => field.name !== "createdAt" && field.name !== "id"
+    (field) => field.name !== "created_at" && field.name !== "id"
   );
 
   return useFormState(filteredFields, props.row);
