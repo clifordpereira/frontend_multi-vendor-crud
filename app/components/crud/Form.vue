@@ -39,43 +39,45 @@ function handleSubmit(event: FormSubmitEvent<any>) {
 </script>
 
 <template>
-  <UForm
-    :schema="formSchema"
-    :state="state"
-    class="space-y-4"
-    @submit="handleSubmit"
-  >
-    <template v-for="field in filteredFields" :key="field.name">
-      <UFormField
-        v-if="!initialState || field.name !== 'password'"
-        :label="field.name"
-        :name="field.name"
-      >
-        <UCheckbox
-          v-if="field.type === 'boolean'"
-          v-model="state[field.name]"
-        />
+  <div class="max-h-[80vh] overflow-y-auto p-4">
+    <UForm
+      :schema="formSchema"
+      :state="state"
+      class="space-y-4"
+      @submit="handleSubmit"
+    >
+      <template v-for="field in filteredFields" :key="field.name">
+        <UFormField
+          v-if="!initialState || field.name !== 'password'"
+          :label="field.name"
+          :name="field.name"
+        >
+          <UCheckbox
+            v-if="field.type === 'boolean'"
+            v-model="state[field.name]"
+          />
 
-        <UInput
-          v-else-if="field.type === 'date'"
-          v-model="state[field.name]"
-          type="datetime-local"
-        />
+          <UInput
+            v-else-if="field.type === 'date'"
+            v-model="state[field.name]"
+            type="datetime-local"
+          />
 
-        <CommonPassword
-          v-else-if="field.name === 'password'"
-          v-model="state[field.name]"
-          type="password"
-        />
+          <CommonPassword
+            v-else-if="field.name === 'password'"
+            v-model="state[field.name]"
+            type="password"
+          />
 
-        <UInput
-          v-else
-          v-model="state[field.name]"
-          :type="field.type"
-          :required="field.required"
-        />
-      </UFormField>
-    </template>
-    <UButton type="submit"> Submit </UButton>
-  </UForm>
+          <UInput
+            v-else
+            v-model="state[field.name]"
+            :type="field.type"
+            :required="field.required"
+          />
+        </UFormField>
+      </template>
+      <UButton type="submit"> Submit </UButton>
+    </UForm>
+  </div>
 </template>
