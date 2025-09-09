@@ -17,8 +17,9 @@ async function onDelete(id: number) {
 
 <template>
   <div class="overflow-x-auto">
+    <h1 class="text-2xl font-bold text-center mt-3">List {{ resource }}</h1>
     <CrudCreateRow :resource />
-    <table class="min-w-full border-collapse border border-gray-300">
+    <table class="min-w-full border-collapse border border-gray-300 mt-1">
       <!-- Table Head -->
       <thead v-if="data?.length">
         <tr>
