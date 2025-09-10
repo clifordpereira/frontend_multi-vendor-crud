@@ -8,5 +8,20 @@
     "label": "Users",
     "to": "/resource/users",
     "icon": "i-lucide-users"
+  },
+  {
+    "label": "Jobs",
+    "to": "/resource/jobs",
+    "icon": "i-lucide-users"
+  },
+  {
+    "label": "Workers",
+    "to": "/resource/workers",
+    "icon": "i-lucide-users"
+  },
+  {
+    "label": "Reviews",
+    "to": "/resource/reviews",
+    "icon": "i-lucide-users"
   }
 ]

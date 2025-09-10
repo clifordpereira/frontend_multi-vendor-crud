@@ -23,7 +23,7 @@ const { data: schema } = await useFetch(
 );
 
 async function onSubmit(data: any) {
-  await useCrudFetch("PATCH", props.resource, props.row.id, data);
+  await useCrudFetch("PUT", props.resource, props.row.id, data);
 }
 
 const isModalOpen = ref(false);

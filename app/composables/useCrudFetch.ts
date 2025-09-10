@@ -1,6 +1,6 @@
 // composables/useCrudFetch.ts
 export async function useCrudFetch(
-  method: "POST" | "PATCH" | "DELETE",
+  method: "POST" | "PUT" | "DELETE",
   resource: string,
   id: number | null = null,
   data: any = null
@@ -8,7 +8,7 @@ export async function useCrudFetch(
   const crudBaseUrl = useRuntimeConfig().public.crudBaseUrl;
 
   const toastMessage: Record<
-    "POST" | "PATCH" | "DELETE",
+    "POST" | "PUT" | "DELETE",
     { title: string; successMessage: string; errorMessage: string }
   > = {
     POST: {
@@ -16,7 +16,7 @@ export async function useCrudFetch(
       successMessage: `A new ${resource} was added successfully.`,
       errorMessage: `Could not save ${resource}`,
     },
-    PATCH: {
+    PUT: {
       title: `${resource} updated`,
       successMessage: `${resource} #${id} was updated successfully.`,
       errorMessage: `Could not update ${resource} #${id}`,
@@ -30,9 +30,11 @@ export async function useCrudFetch(
 
   try {
     const url =
-      method === "PATCH" || method === "DELETE"
+      method === "PUT" || method === "DELETE"
         ? `${crudBaseUrl}/${resource}/${id}`
         : `${crudBaseUrl}/${resource}`;
+
+    console.log(url);
 
     await $fetch(url, {
       method,
@@ -48,7 +50,7 @@ export async function useCrudFetch(
 
     await refreshNuxtData();
   } catch (err) {
-    console.error(err);
+    console.log("Server Error: ", err);
     useToast().add({
       title: "Error",
       description: toastMessage[method].errorMessage,

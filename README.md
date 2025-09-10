@@ -56,7 +56,7 @@ The API must expose CRUD endpoints like:
 | GET    | `/api/:resource`     | Fetch all records of a resource |
 | GET    | `/api/:resource/:id` | Fetch a single record by ID     |
 | POST   | `/api/:resource`     | Create a new record             |
-| PATCH  | `/api/:resource/:id` | Update an existing record       |
+| PUT  | `/api/:resource/:id` | Update an existing record       |
 | DELETE | `/api/:resource/:id` | Delete a record by ID           |
 ```
 
