@@ -12,10 +12,10 @@ useSeoMeta({
     <!-- Hero -->
     <header class="text-center space-y-4">
       <h1 class="text-4xl font-bold text-gray-900 dark:text-gray-100">
-        How to Use This Website
+        CRUD Frontend
       </h1>
       <p class="text-lg text-gray-600 dark:text-gray-400 max-w-2xl mx-auto">
-        This application is a <strong>CRUD Frontend</strong>. You can
+        With only the database schema and no additional code, you can
         <em>Create, Read, Update, and Delete</em> records connected to the
         backend API.
       </p>
@@ -30,10 +30,11 @@ useSeoMeta({
         <p class="text-gray-600 dark:text-gray-300">
           Use the sidebar or top navigation to move between resources:
         </p>
+        <p>Example:</p>
         <ul class="list-disc list-inside mt-2 text-gray-700 dark:text-gray-400">
-          <li><strong>Users</strong> → Manage registered users</li>
-          <li><strong>Products</strong> → Manage product catalog</li>
-          <li><strong>Clients</strong> → Manage client records</li>
+          <li><strong>Workers</strong> → Manage Workers data</li>
+          <li><strong>Job</strong> → Manage Job requests</li>
+          <li><strong>Reviews</strong> → Manage reviews of jobs</li>
         </ul>
       </UCard>
 
@@ -126,7 +127,7 @@ useSeoMeta({
     <!-- Back Button -->
     <div class="text-center">
       <UButton to="/dashboard" color="primary" size="lg">
-        Visit Dashboard
+        Sample Dashboard
       </UButton>
     </div>
   </div>

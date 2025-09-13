@@ -1,6 +1,7 @@
 <script setup lang="ts">
 import type { FormSubmitEvent } from "@nuxt/ui";
 import relations from "~~/shared/data/relations.json";
+import { useChangeCase } from "@vueuse/integrations/useChangeCase";
 
 const props = defineProps<{
   schema: {
@@ -31,14 +32,33 @@ const filteredFields = props.schema.fields.filter(
 const formSchema = useDynamicZodSchema(filteredFields, !!props.initialState);
 
 // reactive state for form data
-const state = reactive<Record<string, any>>({});
-filteredFields.forEach((field) => {
-  if (field.type === "boolean") {
-    state[field.name] = props.initialState?.[field.name] ?? false;
-  } else {
-    state[field.name] = props.initialState?.[field.name] ?? "";
-  }
-});
+// reactive state for form data
+const state = reactive<Record<string, any>>(
+  filteredFields.reduce(
+    (acc, field) => {
+      acc[field.name] =
+        props.initialState?.[field.name] ??
+        (field.type === "boolean" ? false : "");
+      return acc;
+    },
+    {} as Record<string, any>
+  )
+);
+
+// processedFields with capitalized label for display
+const processedFields = computed(() =>
+  filteredFields.map((field) => {
+    let label = field.name;
+    if (label.endsWith("_id")) {
+      label = label.replace("_id", "");
+    }
+    label = useChangeCase(label, "capitalCase").value;
+    return {
+      ...field,
+      label,
+    };
+  })
+);
 
 function handleSubmit(event: FormSubmitEvent<any>) {
   emit("submit", event.data);
@@ -54,10 +74,10 @@ function handleSubmit(event: FormSubmitEvent<any>) {
       class="space-y-4"
       @submit="handleSubmit"
     >
-      <template v-for="field in filteredFields" :key="field.name">
+      <template v-for="field in processedFields" :key="field.name">
         <UFormField
-          v-if="!initialState || field.name !== 'password'"
-          :label="field.name"
+          v-if="!props.initialState || field.name !== 'password'"
+          :label="field.label"
           :name="field.name"
         >
           <UCheckbox
