@@ -36,7 +36,7 @@ export const useAuthStore = defineStore("auth", {
         this.user = res.user;
       } catch (err) {
         console.error("Login failed:", err);
-        throw err;
+        throw { message: "Email/Password incorrect" };
       }
     },
 

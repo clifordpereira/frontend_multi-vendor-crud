@@ -1,8 +1,6 @@
 <script setup lang="ts">
 import type { NavigationMenuItem } from "@nuxt/ui";
-import nav from "~/data/nav.json";
-
-const items = ref<NavigationMenuItem[]>(nav);
+defineProps<{ items: NavigationMenuItem[] }>();
 </script>
 
 <template>

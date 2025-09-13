@@ -1,27 +1,29 @@
 [
   {
-    "label": "Home",
+    "label": "Docs",
     "to": "/",
-    "icon": "i-lucide-home"
+    "icon": "i-lucide-book-open"
   },
   {
-    "label": "Users",
-    "to": "/resource/users",
-    "icon": "i-lucide-users"
-  },
-  {
-    "label": "Workers",
-    "to": "/resource/workers",
-    "icon": "i-lucide-users"
-  },
-  {
-    "label": "Jobs",
-    "to": "/resource/jobs",
-    "icon": "i-lucide-users"
-  },
-  {
-    "label": "Reviews",
-    "to": "/resource/reviews",
-    "icon": "i-lucide-users"
+    "label": "Job MS",
+    "icon": "i-lucide-briefcase",
+    "authOnly": true,
+    "children": [
+      {
+        "label": "Workers",
+        "to": "/resource/workers",
+        "icon": "i-lucide-text"
+      },
+      {
+        "label": "Jobs",
+        "to": "/resource/jobs",
+        "icon": "i-lucide-text"
+      },
+      {
+        "label": "Reviews",
+        "to": "/resource/reviews",
+        "icon": "i-lucide-text"
+      }
+    ]
   }
 ]

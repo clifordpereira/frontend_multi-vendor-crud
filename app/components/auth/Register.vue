@@ -6,7 +6,7 @@ const { data: schema } = await useFetch(`${crudBaseUrl}/schema/users`, {
 
 async function onSubmit(data) {
   await useCrudFetch("POST", "users", null, data);
-  await navigateTo("/resource/users");
+  await navigateTo("/dashboard");
 }
 </script>
 

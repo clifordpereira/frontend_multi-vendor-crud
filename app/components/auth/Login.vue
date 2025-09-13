@@ -8,20 +8,24 @@ const handleLogin = async () => {
   try {
     await auth.login(email.value, password.value);
 
-    await navigateTo("/resource/users");
+    await navigateTo("/dashboard");
   } catch (e) {
-    console.error("Login failed", e);
+    useToast().add({
+      title: "Login Error",
+      description: e.message ?? "An error occurred while logging in",
+      color: "error",
+    });
   }
 };
 </script>
 
 <template>
   <form
-    class="max-w-sm mx-auto p-6 bg-white rounded-2xl shadow space-y-4 m-2"
+    class="w-full max-w-sm mx-auto p-6 space-y-5"
     @submit.prevent="handleLogin"
   >
     <div>
-      <label for="email" class="block text-sm font-medium text-gray-700">
+      <label for="email" class="block text-sm font-medium text-gray-600">
         Email
       </label>
       <UInput
@@ -33,7 +37,7 @@ const handleLogin = async () => {
     </div>
 
     <div>
-      <label for="password" class="block text-sm font-medium text-gray-700">
+      <label for="password" class="block text-sm font-medium text-gray-600">
         Password
       </label>
       <UInput
@@ -45,21 +49,8 @@ const handleLogin = async () => {
       />
     </div>
 
-    <div class="flex gap-1">
-      <UButton
-        type="submit"
-        class="w-1/2"
-        size="lg"
-        color="primary"
-        label="Login"
-      />
-      <UButton
-        to="/register"
-        class="w-1/2"
-        size="lg"
-        color="primary"
-        label="Register"
-      />
+    <div class="flex justify-end gap-3 pt-3">
+      <UButton type="submit" size="lg" color="neutral" label="Login" />
     </div>
   </form>
 </template>
