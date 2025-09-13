@@ -34,8 +34,6 @@ export async function useCrudFetch(
         ? `${crudBaseUrl}/${resource}/${id}`
         : `${crudBaseUrl}/${resource}`;
 
-    console.log(url);
-
     await $fetch(url, {
       method,
       ...(data && { body: data }),
@@ -50,7 +48,7 @@ export async function useCrudFetch(
 
     await refreshNuxtData();
   } catch (err) {
-    console.log("Server Error: ", err);
+    console.log("Clif Server Error: ", err);
     useToast().add({
       title: "Error",
       description: toastMessage[method].errorMessage,

@@ -15,8 +15,8 @@ export default defineNuxtConfig({
   compatibilityDate: "2025-07-16",
   runtimeConfig: {
     public: {
-      crudBaseUrl: process.env.NUXT_PUBLIC_CRUD_BASE_URL,
-      crudApiKey: process.env.NUXT_PUBLIC_CRUD_API_KEY || "",
+      crudBaseUrl: process.env.NUXT_PUBLIC_CRUD_BASE_URL || "http://localhost:3000/api",
+      crudApiKey: process.env.NUXT_PUBLIC_CRUD_API_KEY || "dev-key-123",
     },
   },
 });

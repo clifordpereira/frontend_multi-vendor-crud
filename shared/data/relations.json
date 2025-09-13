@@ -1,0 +1,14 @@
+{
+  "workers": {
+    "user_id": "users"
+  },
+  "jobs": {
+    "customer_id": "users?role=customer",
+    "worker_id": "users?role=worker"
+  },
+  "reviews": {
+    "customer_id": "users?role=customer",
+    "worker_id": "users?role=worker",
+    "job_id": "jobs"
+  }
+}

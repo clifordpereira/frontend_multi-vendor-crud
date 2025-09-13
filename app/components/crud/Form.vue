@@ -1,13 +1,21 @@
 <script setup lang="ts">
 import type { FormSubmitEvent } from "@nuxt/ui";
+import relations from "~~/shared/data/relations.json";
 
 const props = defineProps<{
   schema: {
     resource: string;
-    fields: { name: string; type: string; required?: boolean }[];
+    fields: {
+      name: string;
+      type: string;
+      required?: boolean;
+      selectOptions?: string[];
+    }[];
   };
   initialState?: Record<string, any>;
 }>();
+
+const relatedTable = relations[props.schema.resource] ?? {};
 
 const emit = defineEmits<{
   (e: "submit", event: FormSubmitEvent<any>): void;
@@ -57,6 +65,18 @@ function handleSubmit(event: FormSubmitEvent<any>) {
             v-model="state[field.name]"
           />
 
+          <CrudNameList
+            v-else-if="relatedTable[field.name]"
+            v-model="state[field.name]"
+            :table-name="relatedTable[field.name]"
+          />
+
+          <CrudNameList
+            v-else-if="field.name.endsWith('_id')"
+            v-model="state[field.name]"
+            :field-name="field.name"
+          />
+
           <UInput
             v-else-if="field.type === 'date'"
             v-model="state[field.name]"
@@ -67,6 +87,14 @@ function handleSubmit(event: FormSubmitEvent<any>) {
             v-else-if="field.name === 'password'"
             v-model="state[field.name]"
             type="password"
+          />
+
+          <USelect
+            v-else-if="field.type === 'enum'"
+            v-model="state[field.name]"
+            :items="field.selectOptions"
+            placeholder="Select "
+            class="w-full"
           />
 
           <UInput

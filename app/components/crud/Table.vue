@@ -1,10 +1,12 @@
 <script setup lang="ts">
+import { useChangeCase } from "@vueuse/integrations/useChangeCase";
+
 const props = defineProps<{
   resource: string;
 }>();
 
 const crudBaseUrl = useRuntimeConfig().public.crudBaseUrl;
-const { data } = await useFetch(`${crudBaseUrl}/${props.resource}`, {
+const { data } = await useFetch(`${crudBaseUrl}/list/${props.resource}`, {
   headers: crudHeaders(),
 });
 
@@ -34,10 +36,11 @@ const paginatedItems = ref<any[]>([]);
         <tr>
           <th
             v-for="(value, key) in data[0]"
+            v-show="typeof key === 'string' && !key.endsWith('_id')"
             :key="key"
             class="border border-gray-300 px-4 py-2 text-left bg-gray-500"
           >
-            {{ key }}
+            {{ useChangeCase(String(key), "capitalCase") }}
           </th>
           <th class="border border-gray-300 px-4 py-2 text-left bg-gray-500">
             &nbsp;
@@ -57,6 +60,7 @@ const paginatedItems = ref<any[]>([]);
         <tr v-for="(row, i) in paginatedItems" :key="i">
           <td
             v-for="(value, key) in row"
+            v-show="typeof key === 'string' && !key.endsWith('_id')"
             :key="key"
             class="border border-gray-300 px-4 py-2"
           >

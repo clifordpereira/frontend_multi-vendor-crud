@@ -10,13 +10,13 @@
     "icon": "i-lucide-users"
   },
   {
-    "label": "Jobs",
-    "to": "/resource/jobs",
+    "label": "Workers",
+    "to": "/resource/workers",
     "icon": "i-lucide-users"
   },
   {
-    "label": "Workers",
-    "to": "/resource/workers",
+    "label": "Jobs",
+    "to": "/resource/jobs",
     "icon": "i-lucide-users"
   },
   {
