@@ -11,6 +11,12 @@
     "authOnly": true
   },
   {
+    "label": "Schema",
+    "to": "/schema",
+    "icon": "i-lucide-code",
+    "authOnly": true
+  },
+  {
     "label": "Job MS",
     "icon": "i-lucide-briefcase",
     "authOnly": true,
