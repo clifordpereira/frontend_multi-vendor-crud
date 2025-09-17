@@ -1,3 +1,4 @@
+// useApi.ts
 type HttpMethod =
   | "GET"
   | "POST"
@@ -17,18 +18,22 @@ interface ApiResponse<T> {
 
 export function useApi() {
   const toast = useToast();
+  const crudBaseUrl = useRuntimeConfig().public.crudBaseUrl;
 
   async function callApi<T>(
     method: HttpMethod,
-    url: string,
+    endpoint: string, // e.g. "/test"
     body?: any,
-    headers?: Record<string, string>
+    extraHeaders?: Record<string, string>
   ): Promise<T | null> {
     try {
-      const res = await $fetch<ApiResponse<T>>(url, {
+      const res = await $fetch<ApiResponse<T>>(`${crudBaseUrl}${endpoint}`, {
         method,
         body,
-        headers,
+        headers: {
+          ...crudHeaders(),
+          ...extraHeaders,
+        },
       });
 
       if (res.success) {

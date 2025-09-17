@@ -1,17 +1,11 @@
 <script setup lang="ts">
 const schemaInput = ref("");
 const { parsedTables } = useSchemaParser(schemaInput);
-const { callApi } = useApi();
 
-const crudBaseUrl = useRuntimeConfig().public.crudBaseUrl;
+const { callApi } = useApi();
 // Prefill schema on mount
 onMounted(async () => {
-  const data = await callApi<string>(
-    "GET",
-    `${crudBaseUrl}/get-schema`,
-    null,
-    crudHeaders()
-  );
+  const data = await callApi<string>("GET", "/get-schema");
   if (data) {
     schemaInput.value = data;
   }
@@ -30,14 +24,9 @@ async function submitSchema() {
   }
 
   // Send raw text to backend
-  await callApi(
-    "POST",
-    `${crudBaseUrl}/generate-schema`,
-    {
-      schemaText: schemaInput.value,
-    },
-    crudHeaders()
-  );
+  await callApi("POST", "/generate-schema", {
+    schemaText: schemaInput.value,
+  });
 }
 </script>
 
