@@ -35,9 +35,8 @@ async function logout() {
     </UModal>
 
     <!-- Registration Modal -->
-    <UModal title="User Registration">
+    <UModal v-if="!auth.isAuthenticated" title="User Registration">
       <UButton
-        v-if="!auth.isAuthenticated"
         label="Register"
         color="info"
         variant="outline"
