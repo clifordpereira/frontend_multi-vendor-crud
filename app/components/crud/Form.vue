@@ -1,7 +1,6 @@
 <script setup lang="ts">
 import type { FormSubmitEvent } from "@nuxt/ui";
 import { useChangeCase } from "@vueuse/integrations/useChangeCase";
-import type { Relations } from "~/types/relations";
 
 const props = defineProps<{
   schema: {
@@ -16,8 +15,9 @@ const props = defineProps<{
   initialState?: Record<string, any>;
 }>();
 
-const { callApi } = useApi();
-const relations = (await callApi<Relations>("GET", "/relations")) ?? {};
+const { loadRelations } = useRelations();
+const relations = (await loadRelations()) ?? {};
+
 const relatedTable = relations[props.schema.resource] ?? {};
 
 const emit = defineEmits<{
