@@ -1,7 +1,7 @@
 <script setup lang="ts">
 import type { FormSubmitEvent } from "@nuxt/ui";
-import relations from "~~/shared/data/relations.json";
 import { useChangeCase } from "@vueuse/integrations/useChangeCase";
+import type { Relations } from "~/types/relations";
 
 const props = defineProps<{
   schema: {
@@ -16,6 +16,8 @@ const props = defineProps<{
   initialState?: Record<string, any>;
 }>();
 
+const { callApi } = useApi();
+const relations = (await callApi<Relations>("GET", "/relations")) ?? {};
 const relatedTable = relations[props.schema.resource] ?? {};
 
 const emit = defineEmits<{
@@ -31,7 +33,6 @@ const filteredFields = props.schema.fields.filter(
 // dynamically build zod schema
 const formSchema = useDynamicZodSchema(filteredFields, !!props.initialState);
 
-// reactive state for form data
 // reactive state for form data
 const state = reactive<Record<string, any>>(
   filteredFields.reduce(

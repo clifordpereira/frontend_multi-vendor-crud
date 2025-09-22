@@ -15,8 +15,10 @@ const itemsPerPage = ref(props.itemsPerPage ?? 10);
 
 // filter
 const searchedItems = computed(() => {
-  if (!search.value) return props.data ?? [];
-  return (props.data ?? []).filter((row) =>
+  const data = Array.isArray(props.data) ? props.data : [];
+
+  if (!search.value) return data;
+  return data.filter((row) =>
     Object.values(row)
       .join(" ")
       .toLowerCase()
