@@ -4,11 +4,11 @@ const { parsedTables } = useSchemaParser(schemaInput);
 
 const { callApi } = useApi();
 // Prefill schema on mount
+const { loadSchema } = useSchema();
+
 onMounted(async () => {
-  const data = await callApi<string>("GET", "/get-schema");
-  if (data) {
-    schemaInput.value = data;
-  }
+  const data = await loadSchema();
+  if (data) schemaInput.value = data;
 });
 
 async function submitSchema() {
