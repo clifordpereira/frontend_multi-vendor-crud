@@ -17,6 +17,7 @@
     "@nuxt/image": "^1.11.0",
     "@nuxt/ui": "^3.3.3",
     "@pinia/nuxt": "^0.11.2",
+    "@types/pluralize": "^0.0.33",
     "nuxt": "^4.1.0",
     "pinia": "^3.0.3",
     "pinia-plugin-persistedstate": "^4.5.0",
