@@ -3,11 +3,9 @@ import nav from "~/data/nav.json";
 import type { NavItem } from "~/types/nav";
 
 const typedNav = nav as NavItem[]; // cast JSON
+const menu = ref<NavItem | null>(null);
 
 const auth = useAuthStore();
-
-// keep menu reactive, initially null
-const menu = ref<NavItem | null>(null);
 
 if (auth.isAuthenticated) {
   const { loadSchema } = useSchema();
@@ -18,7 +16,6 @@ if (auth.isAuthenticated) {
 }
 
 const filteredNav = computed<NavItem[]>(() => {
-  // merge typedNav with menu if available
   const items = menu.value ? [...typedNav, menu.value] : [...typedNav];
 
   return items.filter((item) => {
