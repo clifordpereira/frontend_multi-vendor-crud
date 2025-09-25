@@ -9,19 +9,9 @@ async function logout() {
 
 <template>
   <div class="flex gap-3 mb-2">
-    <!-- Login / Logout Modal -->
-    <UModal title="Login">
+    <!-- Login Modal -->
+    <UModal v-if="!auth.isAuthenticated" title="Login">
       <UButton
-        v-if="auth.isAuthenticated"
-        label="Logout"
-        color="primary"
-        variant="outline"
-        icon="i-lucide-log-out"
-        class="rounded-lg"
-        @click="logout"
-      />
-      <UButton
-        v-else
         label="Login"
         color="warning"
         variant="outline"
@@ -33,6 +23,17 @@ async function logout() {
         <AuthLogin />
       </template>
     </UModal>
+
+    <!-- Logout Button -->
+    <UButton
+      v-if="auth.isAuthenticated"
+      label="Logout"
+      color="primary"
+      variant="outline"
+      icon="i-lucide-log-out"
+      class="rounded-lg"
+      @click="logout"
+    />
 
     <!-- Registration Modal -->
     <UModal v-if="!auth.isAuthenticated" title="User Registration">
