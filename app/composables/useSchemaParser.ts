@@ -9,6 +9,11 @@ const typeMap: Record<string, string> = {
 
   s: "string",
   string: "string",
+  t: "string",
+  text: "string",
+
+  p: "password",
+  password: "password",
 };
 
 function normalizeType(input: string): string {

@@ -17,7 +17,7 @@
     "authOnly": true
   },
   {
-    "label": "Job MS",
+    "label": "Demo Data",
     "icon": "i-lucide-briefcase",
     "authOnly": true,
     "children": [
