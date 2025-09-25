@@ -19,7 +19,7 @@
   {
     "label": "Demo Data",
     "icon": "i-lucide-briefcase",
-    "authOnly": true,
+    "guestOnly": true,
     "children": [
       {
         "label": "Workers",
