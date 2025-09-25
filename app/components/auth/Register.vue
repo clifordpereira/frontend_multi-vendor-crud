@@ -6,7 +6,13 @@ const { data: schema } = await useFetch(`${crudBaseUrl}/schema/users`, {
 
 async function onSubmit(data) {
   await useCrudFetch("POST", "users", null, data);
-  await navigateTo("/dashboard");
+  const toast = useToast();
+  toast.add({
+    title: "Info",
+    description: "Please Login to proceed",
+    color: "info",
+  });
+  await navigateTo("/");
 }
 </script>
 

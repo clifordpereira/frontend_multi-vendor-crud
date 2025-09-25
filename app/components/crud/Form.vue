@@ -15,10 +15,13 @@ const props = defineProps<{
   initialState?: Record<string, any>;
 }>();
 
-const { loadRelations } = useRelations();
-const relations = (await loadRelations()) ?? {};
+let relatedTable: Record<string, string> = {};
 
-const relatedTable = relations[props.schema.resource] ?? {};
+if (props.schema.resource !== "users") {
+  const { loadRelations } = useRelations();
+  const relations = (await loadRelations()) ?? {};
+  relatedTable = relations[props.schema.resource] ?? {};
+}
 
 const emit = defineEmits<{
   (e: "submit", event: FormSubmitEvent<any>): void;
